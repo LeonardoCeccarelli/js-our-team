@@ -47,18 +47,56 @@ const teamArray = [
 // Individuo il contenitore dove andrò ad inserire le card
 const cardContainer = document.querySelector(".team-container")
 
-// Richiamo la funzione per far generare dinamicamente le card
-generateCard(teamArray)
+// Individuo i tag da dove ricevo i valori degli utenti per poi 
+// inseerirli in una variabile
+const nameInput = document.getElementById("name")
+const roleInput = document.getElementById("role")
+const imageInput = document.getElementById("image")
 
-// Creo funzione per generare automaticamente le card
-function generateCard(array) {
+// Individuo il bottone che aggiunge le card
+const addUserBtn = document.getElementById("addMemberButton")
+
+// Richiamo la funzione per far generare dinamicamente le card
+generateCard(teamArray, cardContainer)
+
+// Aggiungo l'evento al bottone("click")
+addUserBtn.addEventListener("click", function () {
+
+    // Creo un nuovo oggetto dove vado ad inserire le chiavi
+    // datemi dall'input dell'utente
+    const newUser = {}
+
+    newUser.name = nameInput.value
+    newUser.role = roleInput.value
+    newUser.image = imageInput.value
+
+    // pusho il nuovo oggetto nell'array
+    teamArray.push(newUser)
+
+    generateCard(teamArray, cardContainer)
+
+})
+
+
+/*****************************************
+FUNZIONI
+*****************************************/
+
+/**
+ * Creo funzione per generare automaticamente le card
+ * 
+ * @param {array} array 
+ */
+function generateCard(array, insertContainer) {
+
+    insertContainer.innerHTML = ""
 
     for (let i = 0; i < array.length; i++) {
         const element = array[i];
 
         // per ogni oggetto dell'array individuo nome ruolo e immagine
         // e la vado ad inserire nel campo giusto
-        cardContainer.innerHTML += `<div class="team-card">
+        insertContainer.innerHTML += `<div class="team-card">
                                         <div class="card-image">
                                             <img src="${element.image}"/>
                                         </div>
