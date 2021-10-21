@@ -62,6 +62,12 @@ generateCard(teamArray, cardContainer)
 // Aggiungo l'evento al bottone("click")
 addUserBtn.addEventListener("click", function () {
 
+    // Inserisco la funzione che controlla se il valore inserito dall'utente
+    // è giusto o sbagliato
+    if (checkInputValue(nameInput, roleInput, imageInput)) {
+        return
+    }
+
     // Creo un nuovo oggetto dove vado ad inserire le chiavi
     // datemi dall'input dell'utente
     const newUser = {}
@@ -74,6 +80,8 @@ addUserBtn.addEventListener("click", function () {
     teamArray.push(newUser)
 
     generateCard(teamArray, cardContainer)
+
+    clearInputText(nameInput, roleInput, imageInput)
 
 })
 
@@ -106,4 +114,42 @@ function generateCard(array, insertContainer) {
                                         </div>
                                     </div>`
     }
+}
+
+/**
+ * Funzione che ripulisce il valore dentro al campo input
+ * 
+ * @param {string} item1 
+ * @param {string} item2 
+ * @param {string} item3 
+ */
+function clearInputText(item1, item2, item3) {
+    item1.value = ""
+    item2.value = ""
+    item3.value = ""
+}
+
+/**
+ * Funzione che controlla i valori inseriti dall'utente
+ * 
+ * @param {string} itemName 
+ * @param {string} itemRole 
+ * @param {string} itemImage 
+ */
+function checkInputValue(itemName, itemRole, itemImage) {
+
+    let breakFunction = false
+
+    if ((itemName.value).length < 3 || (itemName.value).length > 25) {
+        alert(`Attenzione: il valore inserito deve contenere da 3 a 25 caratteri`)
+        breakFunction = true
+    } else if ((itemRole.value).length < 3 || (itemRole.value).length > 25) {
+        alert(`Attenzione: il valore inserito deve contenere da 3 a 25 caratteri`)
+        breakFunction = true
+    } else if (!((itemImage.value).toLowerCase()).includes(".")) {
+        alert(`Attenzione: formato immagine non supportato`)
+        breakFunction = true
+    }
+
+    return breakFunction
 }
